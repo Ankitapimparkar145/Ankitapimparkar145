@@ -1,0 +1,89 @@
+Contact Management: Create a program to manage a list of contacts. Users should 
+be able to add, update, delete, and view contact information.
+
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class ContactManagementSystem {
+    private static final Map<String, String> contacts = new HashMap<>();
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("1. Add Contact\n2. Update Contact\n3. Delete Contact\n4. View Contacts\n5. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    addContact();
+                    break;
+                case 2:
+                    updateContact();
+                    break;
+                case 3:
+                    deleteContact();
+                    break;
+                case 4:
+                    viewContacts();
+                    break;
+                case 5:
+                    System.out.println("Exiting program. Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option. Please choose a valid option.");
+            }
+        }
+    }
+
+    private static void addContact() {
+        System.out.print("Enter contact name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter contact number: ");
+        String number = scanner.nextLine();
+
+        contacts.put(name, number);
+        System.out.println("Contact added successfully!");
+    }
+
+    private static void updateContact() {
+        System.out.print("Enter contact name to update: ");
+        String name = scanner.nextLine();
+        
+        if (contacts.containsKey(name)) {
+            System.out.print("Enter new contact number: ");
+            String newNumber = scanner.nextLine();
+
+            contacts.put(name, newNumber);
+            System.out.println("Contact updated successfully!");
+        } else {
+            System.out.println("Contact not found!");
+        }
+    }
+
+    private static void deleteContact() {
+        System.out.print("Enter contact name to delete: ");
+        String name = scanner.nextLine();
+
+        if (contacts.containsKey(name)) {
+            contacts.remove(name);
+            System.out.println("Contact deleted successfully!");
+        } else {
+            System.out.println("Contact not found!");
+        }
+    }
+
+    private static void viewContacts() {
+        if (contacts.isEmpty()) {
+            System.out.println("No contacts available.");
+        } else {
+            System.out.println("Contact List:");
+            for (Map.Entry<String, String> entry : contacts.entrySet()) {
+                System.out.println("Name: " + entry.getKey() + ", Number: " + entry.getValue());
+            }
+        }
+    }
+}
